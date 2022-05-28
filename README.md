@@ -1,6 +1,6 @@
 # roda-turbo
 
-Turbo Streams support for Roda.
+[Turbo Streams](https://turbo.hotwired.dev/handbook/streams) support for the [Roda web toolkit](http://roda.jeremyevans.net/).
 
 ## Installation
 
