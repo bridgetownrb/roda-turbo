@@ -35,6 +35,17 @@ r.post "stream_this" do
 end
 ```
 
+If you'd like to return multiple stream actions, just add them to an array and join at the end:
+
+```rb
+r.post do
+  [
+    turbo_stream.append_all(".content", "<p>Content goes here.</p>"),
+    turbo_stream.replace_all("header", "<h1>Header Title</h1>")
+  ].join
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
