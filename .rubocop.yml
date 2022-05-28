@@ -1,0 +1,35 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 2.7
+
+Metrics/MethodLength:
+  Max: 20
+  Exclude:
+  - test/**/*.rb
+
+Style/ClassVars:
+  Exclude:
+  - test/**/*.rb
+
+Style/Documentation:
+  Enabled: false
+
+Style/Lambda:
+  Enabled: false
+
+Style/LambdaCall:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Layout/LineLength:
+  Max: 120
+  Exclude:
+  - lib/roda/plugins/turbo-streams/**/*.rb
+  - test/**/*.rb
