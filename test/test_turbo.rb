@@ -1,17 +1,23 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require "roda-turbo"
 
 class TestTurbo < Minitest::Test
   def app
     @@app ||= Class.new(Roda) do
       plugin :turbo
+      plugin :render, views: File.join(__dir__, "views")
 
       route do |r|
         r.get "turboing" do
           response.turbo_stream
 
           "Is Turbo? #{r.turbo_stream?}"
+        end
+
+        r.get "in_views" do
+          render :in_views
         end
 
         r.post "stream_this" do
@@ -37,6 +43,13 @@ class TestTurbo < Minitest::Test
     post "/stream_this", {}
 
     assert_equal "<turbo-stream action=\"append\" target=\"some-id\"><template><p>Hello World!</p></template></turbo-stream>",
+                 last_response.body
+  end
+
+  def test_in_views
+    get "/in_views", {}
+
+    assert_equal "Tag:\n<turbo-stream action=\"append\" target=\"some-id\"><template><p>I'm in a view!</p></template></turbo-stream>",
                  last_response.body
   end
 end

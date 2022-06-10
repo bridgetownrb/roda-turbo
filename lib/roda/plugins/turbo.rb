@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "roda/plugins/turbo-streams/tag_builder"
+require "roda-turbo/stream_tag_builder"
 
 class Roda
   module RodaPlugins
@@ -25,7 +25,7 @@ class Roda
         def turbo_stream
           @turbo_stream ||= begin
             response.turbo_stream
-            ::Turbo::Streams::TagBuilder.new(self)
+            RodaTurbo::StreamTagBuilder.new(self)
           end
         end
       end

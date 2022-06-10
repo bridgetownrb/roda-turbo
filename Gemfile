@@ -16,3 +16,5 @@ gem "rack-test"
 gem "rubocop-minitest", "~> 0.19.1"
 
 gem "rubocop-rake", "~> 0.6.0"
+
+gem "tilt", "~> 2.0"

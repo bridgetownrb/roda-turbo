@@ -1,6 +1,6 @@
 # roda-turbo
 
-[Turbo Streams](https://turbo.hotwired.dev/handbook/streams) support for the [Roda web toolkit](http://roda.jeremyevans.net/).
+[Turbo Streams](https://turbo.hotwired.dev/handbook/streams) support for the [Roda web toolkit](http://roda.jeremyevans.net/). It works in a standard Roda context as well as in [Bridgetown](https://www.bridgetownrb.com).
 
 ## Installation
 
@@ -45,6 +45,14 @@ r.post do
   ].join
 end
 ```
+
+You can also use the `turbo_stream` helper in Roda views, along with `render` parameters.
+
+```erb
+<%= turbo_stream.update "#el", template: "content_partial", locals: { foo: "bar" } %>
+```
+
+If you're using the plugin within Bridgetown Ruby-based templates, the helper will work there as well. Render parameters will be passed to the underlying template engine's `partial` method. (Note: this only works in Bridgetown 1.1 or later.)
 
 ## Development
 
