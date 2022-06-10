@@ -4,7 +4,7 @@ require "test_helper"
 require "roda-turbo"
 
 class TestTurbo < Minitest::Test
-  def app
+  def app # rubocop:disable Metrics
     @@app ||= Class.new(Roda) do
       plugin :turbo
       plugin :render, views: File.join(__dir__, "views")
