@@ -52,7 +52,15 @@ You can also use the `turbo_stream` helper in Roda views, along with `render` pa
 <%= turbo_stream.update "#el", template: "content_partial", locals: { foo: "bar" } %>
 ```
 
-If you're using the plugin within Bridgetown Ruby-based templates, the helper will work there as well. Render parameters will be passed to the underlying template engine's `partial` method. (Note: this only works in Bridgetown 1.1 or later.)
+### Bridgetown
+
+The `turbo_stream` helper is available within Roda routes inside your Bridgetown project as well as Ruby-based templates.
+
+Render parameters (such as in the above example) will be passed to the underlying template engine's `partial` method. (Note: this only works in Bridgetown 1.1 or later.) You can also inline render components and pass the output to the initial string argument.
+
+```erb
+<%= turbo_stream.update "#navbar", render(Public::Navbar.new metadata: site.metadata, resource: resource) %>
+```
 
 ## Development
 
