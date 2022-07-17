@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    roda-turbo (0.1.0)
+    roda-turbo (1.0.0)
       roda (~> 3.50)
 
 GEM
@@ -19,7 +19,7 @@ GEM
     rake (13.0.6)
     regexp_parser (2.5.0)
     rexml (3.2.5)
-    roda (3.56.0)
+    roda (3.58.0)
       rack
     rubocop (1.30.0)
       parallel (~> 1.10)

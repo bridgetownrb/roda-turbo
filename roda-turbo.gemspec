@@ -2,9 +2,9 @@
 
 Gem::Specification.new do |spec|
   spec.name = "roda-turbo"
-  spec.version = "0.1.0"
+  spec.version = "1.0.0"
   spec.authors = ["Jared White"]
-  spec.email = ["jared@jaredwhite.com"]
+  spec.email = ["jared@whitefusion.studio"]
 
   spec.summary = "Turbo Frames & Streams support for Roda"
   spec.homepage = "https://github.com/bridgetownrb/roda-turbo"
