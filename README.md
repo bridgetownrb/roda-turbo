@@ -69,7 +69,7 @@ Add the initializer to your configure block:
 Bridgetown.configure do
   # configurations…
 
-  init :turbo
+  init :"roda-turbo"
 
   # configurations…
 end
