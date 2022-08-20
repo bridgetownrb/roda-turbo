@@ -10,6 +10,10 @@ module RodaTurbo
   end
 end
 
-Bridgetown.initializer :"roda-turbo" do
+Bridgetown.initializer :"roda-turbo" do |config|
+  config.roda do |app|
+    app.plugin :turbo
+  end
+
   Bridgetown::RubyTemplateView::Helpers.include RodaTurbo::BridgetownHelpers
 end
