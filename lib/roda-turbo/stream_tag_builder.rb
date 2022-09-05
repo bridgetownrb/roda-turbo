@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RodaTurbo
-  # The tag builder for use in Roda routes and views
+  # The tag builder for use in Roda routes and views (and Bridgetown)
   #
   # (Note: most of this code is lifted from the turbo-rails gem: https://github.com/hotwired/turbo-rails)
   class StreamTagBuilder

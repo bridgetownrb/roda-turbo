@@ -2,18 +2,18 @@
 
 require "roda-turbo/stream_tag_builder"
 
-module RodaTurbo
-  module BridgetownHelpers
-    def turbo_stream
-      RodaTurbo::StreamTagBuilder.new(view, render_method: :partial)
-    end
-  end
-end
-
 Bridgetown.initializer :"roda-turbo" do |config|
+  # Add the Turbo plugin to the Roda app
   config.roda do |app|
     app.plugin :turbo
   end
 
-  Bridgetown::RubyTemplateView::Helpers.include RodaTurbo::BridgetownHelpers
+  # Add a turbo_stream helper to Bridgetown views
+  config.builder :RodaTurboBuilder do
+    def build
+      helper :turbo_stream do
+        RodaTurbo::StreamTagBuilder.new(helpers.view, render_method: :partial)
+      end
+    end
+  end
 end
