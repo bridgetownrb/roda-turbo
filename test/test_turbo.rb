@@ -2,11 +2,19 @@
 
 require "test_helper"
 require "roda-turbo"
+require "json"
+
+module CustomActions
+  def redirect_to(url, delay: nil)
+    action "redirect_to", "", { url: url, delay: delay }.to_json
+  end
+end
 
 class TestTurbo < Minitest::Test
   def app # rubocop:disable Metrics
     @@app ||= Class.new(Roda) do
       plugin :turbo
+      Turbo::Streams::TagBuilder.include CustomActions
       plugin :render, views: File.join(__dir__, "views")
 
       route do |r|
@@ -22,6 +30,10 @@ class TestTurbo < Minitest::Test
 
         r.post "stream_this" do
           turbo_stream.append "some-id", "<p>Hello World!</p>"
+        end
+
+        r.post "redirect_me" do
+          turbo_stream.redirect_to "/url", delay: 1000
         end
       end
     end.app.freeze
@@ -50,6 +62,13 @@ class TestTurbo < Minitest::Test
     get "/in_views", {}
 
     assert_equal "Tag:\n<turbo-stream action=\"append\" target=\"some-id\"><template><p>I'm in a view!</p></template></turbo-stream>",
+                 last_response.body
+  end
+
+  def test_custom_actions
+    post "/redirect_me", {}
+
+    assert_equal "<turbo-stream action=\"redirect_to\" target=\"\"><template>{\"url\":\"/url\",\"delay\":1000}</template></turbo-stream>",
                  last_response.body
   end
 end

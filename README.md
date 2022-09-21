@@ -87,6 +87,65 @@ Render parameters (such as in the above example) will be passed to the underlyin
 turbo_stream.update "#navbar", render(Public::Navbar.new metadata: bridgetown_site.metadata, resource: resource)
 ```
 
+## Custom Actions
+
+Turbo 7.2+ supports the ability to add custom actions so that you're no longer restricted only to `append`, `replace`, etc. There's a two-step process to adding custom actions. First, you'll want to add the action as a new method available through the `turbo_stream` helper. Next, you'll want to provide the action function to Turbo's JS on the frontend.
+
+Let's add a `redirect_to` action so that it's easy to use Turbo's `visit` feature from a stream. We'll start first with the pure Roda example, then show an alternate approach for Bridgetown.
+
+Define this above your Roda application, or in a separate file:
+
+```ruby
+require "json"
+
+module CustomActions
+  def redirect_to(url, delay: nil)
+    action "redirect_to", "", { url: url, delay: delay }.to_json
+  end
+end
+```
+
+Next, right below the `plugin :turbo` statement, add the following:
+
+```ruby
+Turbo::Streams::TagBuilder.include CustomActions
+```
+
+Then, below where you `import * from Turbo`, add the following:
+
+```js
+const redirectTo = function() {
+  const payload = JSON.parse(this.templateContent.textContent)
+  setTimeout(() => {
+    Turbo.visit(payload.url)
+  }, payload.delay || 0)
+}
+
+Turbo.StreamActions.redirect_to = redirectTo
+```
+
+If you have a lot of custom actions, you could relocate them all to a separate file.
+
+And that's it! Now you can call `turbo_stream.redirect_to("/my-url", delay: 2500)` in a response and it will use this custom action.
+
+For Bridgetown users, you don't need include the Ruby custom module in the Roda app. Instead, define a `config/roda-turbo.rb` file and include the following:
+
+```ruby
+module CustomActions
+  def redirect_to(url, delay: nil)
+    action "redirect_to", "", { url:, delay: }.to_json
+  end
+end
+
+Bridgetown.initializer :"roda-turbo" do
+  Turbo::Streams::TagBuilder.include CustomActions
+end
+```
+
+And there you go!
+
+**Note:** third-party gem makers can build their own custom actions which could be used by Rails, Roda, and/or Bridgetown. As long as they provide a module that's easily included in `Turbo::Streams::TagBuilder` and doesn't require Rails as a hard dependency, then that will allow Turbo to flourish as a cross-Ruby-platform framework.
+
 ## Development
 
 After checking out this repo, run `bin/setup` to install dependencies. Then, run `bin/rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
