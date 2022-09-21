@@ -15,7 +15,13 @@ Style/ClassVars:
   Exclude:
   - test/**/*.rb
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+
 Style/Documentation:
+  Enabled: false
+
+Style/EmptyCaseCondition:
   Enabled: false
 
 Style/Lambda:
