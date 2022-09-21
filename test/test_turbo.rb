@@ -19,7 +19,7 @@ class TestTurbo < Minitest::Test
 
       route do |r|
         r.get "turboing" do
-          response.turbo_stream
+          r.respond_with_turbo_stream
 
           "Is Turbo? #{r.turbo_stream?}"
         end
@@ -33,7 +33,7 @@ class TestTurbo < Minitest::Test
         end
 
         r.post "redirect_me" do
-          turbo_stream.redirect_to "/url", delay: 1000
+          [turbo_stream.redirect_to("/url", delay: 1000)]
         end
       end
     end.app.freeze
@@ -52,21 +52,22 @@ class TestTurbo < Minitest::Test
   end
 
   def test_turbo_stream_tag
-    post "/stream_this", {}
+    post "/stream_this", {}, "HTTP_ACCEPT" => "text/vnd.turbo-stream.html"
 
     assert_equal "<turbo-stream action=\"append\" target=\"some-id\"><template><p>Hello World!</p></template></turbo-stream>",
                  last_response.body
   end
 
   def test_in_views
-    get "/in_views", {}
+    get "/in_views", {}, "HTTP_ACCEPT" => "text/vnd.turbo-stream.html"
 
+    assert_equal "text/vnd.turbo-stream.html", last_response.headers["Content-Type"]
     assert_equal "Tag:\n<turbo-stream action=\"append\" target=\"some-id\"><template><p>I'm in a view!</p></template></turbo-stream>",
                  last_response.body
   end
 
   def test_custom_actions
-    post "/redirect_me", {}
+    post "/redirect_me", {}, "HTTP_ACCEPT" => "text/vnd.turbo-stream.html"
 
     assert_equal "<turbo-stream action=\"redirect_to\" target=\"\"><template>{\"url\":\"/url\",\"delay\":1000}</template></turbo-stream>",
                  last_response.body

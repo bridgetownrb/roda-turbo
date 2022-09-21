@@ -46,14 +46,14 @@ r.post "stream_this" do
 end
 ```
 
-If you'd like to return multiple stream actions, just define them within an array and join at the end:
+If you'd like to return multiple stream actions, just define them within an array:
 
 ```rb
 r.post do
   [
     turbo_stream.append_all(".content", "<p>Content goes here.</p>"),
     turbo_stream.replace_all("header", "<h1>Header Title</h1>")
-  ].join
+  ]
 end
 ```
 
@@ -62,6 +62,8 @@ You can also use the `turbo_stream` helper in Roda views, along with `render` pa
 ```erb
 <%= turbo_stream.update "#el", template: "content_partial", locals: { foo: "bar" } %>
 ```
+
+If for some reason you need to set the response content type to Turbo Streams programmatically (`text/vnd.turbo-stream.html`), you can call the `r.respond_with_turbo_stream` method.
 
 ### Bridgetown Setup
 
