@@ -1,9 +1,5 @@
 # roda-turbo
 
-_**WIP:** this plugin will be officially released as part of the Bridgetown 1.2 release cycle later this year. Stay tuned…_
-
-----
-
 This plugin adds [Turbo Streams](https://turbo.hotwired.dev/handbook/streams) support for the [Roda web toolkit](http://roda.jeremyevans.net/). It works in a standard Roda context as well as in [Bridgetown](https://www.bridgetownrb.com).
 
 **NOTE:** This does not add support for async streaming (aka via Websockets, etc.). It simply adds support for stream tags in HTML responses, such as when forms are submitted via Turbo. See [issue #2](https://github.com/bridgetownrb/roda-turbo/issues/2) to track a future implementation. Turbo Frame tag helpers are [also planned](https://github.com/bridgetownrb/roda-turbo/issues/1).
@@ -130,7 +126,7 @@ If you have a lot of custom actions, you could relocate them all to a separate f
 
 And that's it! Now you can call `turbo_stream.redirect_to("/my-url", delay: 2500)` in a response and it will use this custom action.
 
-For Bridgetown users, you don't need include the Ruby custom module in the Roda app. Instead, define a `config/roda-turbo.rb` file and include the following:
+For Bridgetown users, configuration is easy. Just define a `config/roda-turbo.rb` file and include the following:
 
 ```ruby
 module CustomActions
