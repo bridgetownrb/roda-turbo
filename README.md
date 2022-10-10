@@ -12,7 +12,7 @@ This README assumes you know how to install [Turbo's JavaScript library](https:/
 import * as Turbo from "https://cdn.skypack.dev/@hotwired/turbo"
 ```
 
-If you're using Bridgetown, you can simply run the [Turbo bundled configuration](https://www.bridgetownrb.com/docs/bundled-configurations#turbo).
+If you're using Bridgetown, you can run the [Turbo bundled configuration](https://www.bridgetownrb.com/docs/bundled-configurations#turbo).
 
 Once the Turbo frontend is installed, you can run this command to add the roda-turbo gem to your `Gemfile`:
 
@@ -20,11 +20,29 @@ Once the Turbo frontend is installed, you can run this command to add the roda-t
 $ bundle add roda-turbo
 ```
 
-Then add the plugin to your Roda app:
+### Installation in Roda
+
+Add the plugin to your Roda app, e.g.:
 
 ```rb
 class App < Roda
   plugin :turbo
+end
+```
+
+### Installation in Bridgetown
+
+Add the initializer to your configure block:
+
+```rb
+# config/initializers.rb
+
+Bridgetown.configure do
+  # configurations…
+
+  init :"roda-turbo"
+
+  # configurations…
 end
 ```
 
@@ -53,6 +71,8 @@ r.post do
 end
 ```
 
+### The `turbo_stream` Helper
+
 You can also use the `turbo_stream` helper in Roda views, along with `render` parameters.
 
 ```erb
@@ -61,23 +81,7 @@ You can also use the `turbo_stream` helper in Roda views, along with `render` pa
 
 If for some reason you need to set the response content type to Turbo Streams programmatically (`text/vnd.turbo-stream.html`), you can call the `r.respond_with_turbo_stream` method.
 
-### Bridgetown Setup
-
-Add the initializer to your configure block:
-
-```rb
-# config/initializers.rb
-
-Bridgetown.configure do
-  # configurations…
-
-  init :"roda-turbo"
-
-  # configurations…
-end
-```
-
-The `turbo_stream` helper will available within routes inside your Bridgetown project as well as Ruby-based templates.
+In the Bridgetown context, the `turbo_stream` helper will available within routes inside your Bridgetown project as well as Ruby-based templates.
 
 Render parameters (such as in the above example) will be passed to the underlying template engine's `partial` method. You can also inline render components and pass the output to the initial string argument.
 
