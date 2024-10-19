@@ -1,5 +1,10 @@
 # roda-turbo
 
+> [!WARNING]
+> I've migrated away from using the Hotwire stack (see [this blog post](https://www.bridgetownrb.com/future/road-to-bridgetown-2.0-escaping-burnout/#the-37signals-problem) for the reasons why I now avoid 37signals-owned codebases), so I don't intend to develop this plugin any further. I'll be happy to accept PRs and cut a new release, but beyond that, consider this plugin "done".
+
+----
+
 This plugin adds [Turbo Streams](https://turbo.hotwired.dev/handbook/streams) support for the [Roda web toolkit](http://roda.jeremyevans.net/). It works in a standard Roda context as well as in [Bridgetown](https://www.bridgetownrb.com) (v1.2 or higher).
 
 **NOTE:** This does not add support for async streaming (aka via Websockets, etc.). It simply adds support for stream tags in HTML responses, such as when forms are submitted via Turbo. See [issue #2](https://github.com/bridgetownrb/roda-turbo/issues/2) to track a future implementation. Turbo Frame tag helpers are [also planned](https://github.com/bridgetownrb/roda-turbo/issues/1).
